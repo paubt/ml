@@ -3,6 +3,7 @@ package gdm
 import (
 	"errors"
 	"fmt"
+	"ml/src/oring/myio"
 )
 
 // TransposeMatrix row 2d slice to column 2d slice
@@ -40,14 +41,15 @@ func MatrixMultiplication(a [][]int, b [][]int) [][]int {
 	return outta
 }
 
-func getCofactor(mat [][]int, temp [][]int, p int, q int) [][]int {
+func getCofactor(mat [][]int, igrow int, igcol int) [][]int {
 	var i int = 0
 	var j int = 0
 	var inner []int
+	var temp [][]int
 	for row := 0; row < len(mat); row++ {
 		inner = nil
 		for col := 0; col < len(mat); col++ {
-			if row != p && col != q {
+			if row != igrow && col != igcol {
 				inner = append(inner, mat[row][col])
 				j++
 				if j == len(mat)-1 {
@@ -56,12 +58,16 @@ func getCofactor(mat [][]int, temp [][]int, p int, q int) [][]int {
 				}
 			}
 		}
-		temp = append(temp, inner)
+		if inner != nil {
+			temp = append(temp, inner)
+		}
 	}
 	return temp
 }
 
 func MatrixDet(a [][]int) (int, error) {
+	myio.Print2dSlice(a)
+	fmt.Printf("\n")
 	if len(a) == 0 {
 		err := errors.New("length is zero ---> error")
 		return 0, err
@@ -72,6 +78,7 @@ func MatrixDet(a [][]int) (int, error) {
 	}
 	if len(a) == 2 {
 		sum := a[0][0]*a[1][1] - a[1][0]*a[0][1]
+		fmt.Println(sum)
 		return sum, nil
 	}
 	//init array to store cofactors
@@ -82,15 +89,16 @@ func MatrixDet(a [][]int) (int, error) {
 	var d int
 	//iterate through each element in first row
 	for i := 0; i < len(a); i++ {
-		temp = getCofactor(a, temp, 0, i)
+		temp = getCofactor(a, i, 0)
 		e, err := MatrixDet(temp)
 		if err != nil {
 			return 0, err
 		}
+		fmt.Printf("%d + %d * %d * %d = ", d, sign, a[0][i], e)
 		d = d + sign*a[0][i]*e
+		fmt.Printf("%d\n", d)
 		sign = -sign
 	}
-
 	return d, nil
 }
 

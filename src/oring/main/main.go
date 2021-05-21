@@ -31,20 +31,22 @@ func main() {
 	fmt.Println(xt)
 	xtx := gdm.MatrixMultiplication(x, xt)
 	fmt.Println(xtx)
-
-	fmt.Printf("\n----------------test----------------\n")
-	a := [][]int{{1, 2, 1}, {3, 4, 4}}
-	b := [][]int{{2, 3}, {4, 1}, {3, 3}}
-	fmt.Println("a", a, "\nb", b)
-	c := gdm.MatrixMultiplication(a, b)
-	fmt.Println(c)
-	d, err2 := gdm.MatrixDet(c)
-	if err2 != nil {
-		fmt.Println(err2)
-	}
-	fmt.Println(d)
+	/*
+		fmt.Printf("\n----------------test----------------\n")
+		a := [][]int{{1, 2, 1}, {3, 4, 4}}
+		b := [][]int{{2, 3}, {4, 1}, {3, 3}}
+		fmt.Println("a", a, "\nb", b)
+		c := gdm.MatrixMultiplication(a, b)
+		fmt.Println(c)
+		d, err2 := gdm.MatrixDet(c)
+		if err2 != nil {
+			fmt.Println(err2)
+		}
+		fmt.Println(d)
+	*/
+	fmt.Println("------------------------")
 	test := [][]int{{1, 0, 2, -1},
-		{3, 0, 0, 5},
+		{3, 1, 0, 5},
 		{2, 1, 4, -3},
 		{1, 0, 5, 0}}
 	dtest, err := gdm.MatrixDet(test)
