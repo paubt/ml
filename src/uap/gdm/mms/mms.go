@@ -4,8 +4,8 @@ import (
 	"errors"
 )
 
-// TransposeMatrix row 2d slice to column 2d slice
-func TransposeMatrix(matrix [][]float64) [][]float64 {
+// MatrixTranspose row 2d slice to column 2d slice
+func MatrixTranspose(matrix [][]float64) [][]float64 {
 	columns := len(matrix)
 	rows := len(matrix[0])
 	var tempTuple []float64
@@ -135,11 +135,16 @@ func MatrixAdjoint(a [][]float64) [][]float64 {
 		res = append(res, inner)
 	}
 	//transpose the res
-	res = TransposeMatrix(res)
+	res = MatrixTranspose(res)
 	return res
 }
 
 func MatrixInvertible(a [][]float64) ([][]float64, error) {
+	//test case where n = 1
+	if len(a) == 1 {
+		a[0][0] = 1 / a[0][0]
+		return a, nil
+	}
 	var res [][]float64
 	var inner []float64
 	aDet, err := MatrixDet(a)

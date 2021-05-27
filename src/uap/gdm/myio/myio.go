@@ -8,16 +8,16 @@ import (
 	"strings"
 )
 
-// ReadFileToSlice read file and return it as a int slice
-func ReadFileToSlice(filePath string) ([][]float64, error) {
+// ReadFileToSliceWhiteSpaceSep read file and return it as a int slice
+func ReadFileToSliceWhiteSpaceSep(filePath string) ([][]float64, error) {
 	//open file
 	file, err := os.Open(filePath)
-	//close file when exiting main
-	defer file.Close()
-	//if an error occurs throw exception
 	if err != nil {
 		return nil, err
 	}
+	//close file when exiting main
+	defer file.Close()
+
 	//create a new scanner to go through the file
 	scanner := bufio.NewScanner(file)
 	//empty output 2d slice
@@ -31,8 +31,14 @@ func ReadFileToSlice(filePath string) ([][]float64, error) {
 		//go through the sliced row, convert each value from string to int
 		//and append it to the temporal slice
 		for _, val := range res1 {
-			i, _ := strconv.Atoi(val)
-			tempRowSlice = append(tempRowSlice, float64(i))
+			//transform string value to float value
+			// int solution: i, _ := strconv.Atoi(val)
+			f, err := strconv.ParseFloat(val, 64)
+			if err != nil {
+				return nil, err
+			}
+			//append parsed float to temporal row
+			tempRowSlice = append(tempRowSlice, f)
 		}
 		//append the temporal slice of a row to the 2d output slice
 		inputData = append(inputData, tempRowSlice)
