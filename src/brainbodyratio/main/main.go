@@ -26,11 +26,12 @@ func main() {
 	fmt.Println("-----the input data-----\n", "x :\n", x, "\ny :\n", y)
 	//call linear regression function
 	fmt.Println("-----lin reg begins-----")
-	betaPara, err := linreg.LinearRegression(x, y)
+	betaN, betaZero, err := linreg.LinearRegression(x, y)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(betaPara)
+	fmt.Println(betaN)
+	fmt.Println(betaZero)
 	fmt.Println("-----lin reg ends-----")
 
 }

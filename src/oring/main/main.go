@@ -21,19 +21,20 @@ func main() {
 	myio.Print2dSliceHead(tdata, 5)
 
 	y := tdata[1]
-	var betaZero = 0
 	var x [][]float64
 	//add temp para
 	x = append(x, tdata[2])
 	//add pressure parameter
 	x = append(x, tdata[3])
-	fmt.Println("beta0 : ", betaZero, "\nx :", x, "\ny :", y)
+	fmt.Println("---------LinReg starts-----------\nx :", x, "\ny :", y)
 
-	betaPara, err := linreg.LinearRegression(x, y)
+	betaN, betaZero, err := linreg.LinearRegression(x, y)
 	if err != nil {
 		fmt.Println(err)
 	}
-	fmt.Println(betaPara)
+	fmt.Println(betaN)
+	fmt.Println(betaZero)
+
 	fmt.Println("-------------------LinReg ends-----------")
 
 }
